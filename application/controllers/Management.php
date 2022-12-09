@@ -100,7 +100,13 @@ class Management extends CI_Controller
 		$data['title'] = 'Kriteria';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$data['pengurutanK'] = $this->menu->kodeKriteria();
+		$kodeKriteria = $this->menu->kodeKriteria();
+
+		$urutan = substr($kodeKriteria['kodeTerbesar'], 1, 4);
+		$urutan++;
+		$huruf = "T";
+		$kodeKriteria = $huruf.sprintf("%03s", $urutan);
+		$data['pengurutanK'] = $kodeKriteria;
 
 		$data['kriteria'] = $this->db->get('tes_minat')->result_array();
 		// $data['keluhan'] = $this->menu->KeluhanPelanggan()->result_array();

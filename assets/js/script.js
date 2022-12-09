@@ -235,7 +235,11 @@ function editSubMenu(id) {
 			$("#menu_id").val(data.menu_id);
 			$("#url").val(data.url);
 			$("#icon").val(data.icon);
-			$("#is_active").val(data.is_active);
+			if (data.is_active == "0") {
+				$("#is_active").prop("checked", false);
+			} else if (data.is_active == "1") {
+				$("#is_active").prop("checked", true);
+			}
 			$("#id").val(data.id);
 		},
 	});

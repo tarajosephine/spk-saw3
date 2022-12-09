@@ -3,16 +3,16 @@
         <div class="row justify-content-center">
             <div class="col-xxl-4 col-lg-5">
                 <div class="card">
-                    <div class="card-header text-center bg-primary">
+                    <div class="card-header text-center bg-khusus">
                         <a href="index.html">
-                            <span><img src="<?= base_url(); ?>assets/images/sayaka.jpeg" alt=""
+                            <span><img src="<?= base_url(); ?>assets/images/sayaka.png" alt=""
                                     height="100"></span>
                         </a>
                     </div>
 
                     <div class="card-body p-3">
                         <div class="text-center w-75 m-auto">
-                            <h4 class="text-dark-50 text-center pb-0 fw-bold">Login</h4>
+                            <h4 class="text-dark-50 text-center font-20 pb-0 fw-bold">Login</h4>
                             <p class="text-muted mb-4">
                                 <!-- <span><img src="<?= base_url(); ?>assets/images/" alt="" height="40"></span> -->
                             </p>
@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="mb-3 mb-0 text-center">
-                                <button class="btn btn-primary" type="submit"> Masuk Aplikasi </button>
+                                <button class="btn btn-warnakhusus" type="submit"> Masuk Aplikasi </button>
                             </div>
                         </form>
                     </div>

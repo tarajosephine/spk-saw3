@@ -13,6 +13,15 @@
 	color: #cccccc;
 }
 
+.bg-khusus{
+	background-color: #6b0000;
+}
+
+.btn-warnakhusus {
+	background-color: #a30000;
+	color: white;
+}
+
 .image-preview__image {
 	display: none;
 	width: 100%;

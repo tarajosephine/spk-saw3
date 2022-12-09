@@ -54,7 +54,15 @@
 								<td scope="row"><?= $i; ?></td>
 								<td><?= $k['kd_tes']; ?></td>
 								<td><?= $k['kriteria']; ?></td>
-								<td><?= $k['status']; ?></td>
+								<td>
+									<?php
+										if ($k['status'] == 1) {
+											echo '<h5 class="text-success">Active</h5>';
+										} else {
+											echo '<h5 class="text-danger">Nonactive</h5>';
+										}
+									?>
+								</td>
 								<td>
 									<div class="dropdown float-end">
 										<a href="#" class="dropdown-toggle text-muted arrow-none"
@@ -103,7 +111,7 @@
 				<div class="modal-body">
 					<div class="form-floating mb-2">
 						<input type="text" class="form-control" id="kd_tes" name="kd_tes"
-							placeholder="Kode Tes" value="<?= $pengurutanK['kodeTerbesar']; ?>" />
+							placeholder="Kode Tes" value="<?= $pengurutanK; ?>" disabled/>
 						<label for="floatingInput">Kode Kriteria</label>
 					</div>
 
@@ -113,13 +121,11 @@
 					</div>
 
 					<div class="form-floating mb-2">
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="status" value="1">
-							<label class="form-check-label" for="inlineRadio1">Aktif</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="status" value="0">
-							<label class="form-check-label" for="inlineRadio2">Non-Aktif</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active" checked>
+							<label class="form-check-label" for="is_active">
+								Active?
+							</label>
 						</div>
 					</div>
 				</div>

@@ -1,15 +1,15 @@
 <!-- Begin page -->
 <div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
-    <div class="leftside-menu">
+    <div class="leftside-menu" style="background-color: #6b0000;">
 
         <!-- LOGO -->
         <a href="<?= base_url('user'); ?>" class="logo text-center logo-light mt-2">
-            <span class="logo-lg">
-                <img src="<?= base_url(); ?>assets/images/sayaka.jpeg" alt="" height="80">
+            <span class="logo-lg" style="background-color: #6b0000;">
+                <img src="<?= base_url(); ?>assets/images/sayaka.png" alt="" height="80">
             </span>
-            <span class="logo-sm">
-                <img src="<?= base_url(); ?>assets/images/sayaka.jpeg" alt="" height="50">
+            <span class="logo-sm" style="background-color: #6b0000;">
+                <img src="<?= base_url(); ?>assets/images/faviconi.ico" alt="" height="50">
             </span>
         </a>
 

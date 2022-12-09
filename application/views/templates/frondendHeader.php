@@ -41,7 +41,8 @@
 		<?php endif; ?>
 		<div class="container d-flex align-items-center">
 
-			<h1 class="logo mr-auto"><a href="<?= base_url(); ?>Pelayanan"><b>SIKAPIDOR</b></a></h1>
+		<img src="<?= base_url(); ?>assets/frontend/img/favicon.ico" alt="">&nbsp;
+		<h1 class="logo mr-auto"><a href="<?= base_url(); ?>Pelayanan"><b>IKAPIDOR</b></a></h1>
 
 			<!-- Uncomment below if you prefer to use an image logo -->
 			<!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->

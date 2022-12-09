@@ -7,13 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= base_url(); ?>assets/images/sayaka.jpeg">
+	
+	<!-- Favicons -->
+	<link href="<?= base_url(); ?>assets/frontend/img/favicon.png" rel="icon">
+	<link href="<?= base_url(); ?>assets/frontend/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- App css -->
     <link href="<?= base_url(); ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url(); ?>assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
     <link href="<?= base_url(); ?>assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+    <link href="<?= base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css" id="dark-style" />
 
 </head>
 
