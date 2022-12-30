@@ -25,19 +25,19 @@ class Pelayanan extends CI_Controller
 		$this->load->view('templates/frondendFooter');
 	}
 
-	public function rekomendasi()
-	{
-		$data['title'] = 'Rekomendasi';
-		$this->load->view('templates/frondendHeader', $data);
-		$this->load->view('pelayanan/rekomendasi', $data);
-		$this->load->view('templates/frondendFooter');
-	}
-
 	public function Tentang()
 	{
 		$data['title'] = 'Tentang';
 		$this->load->view('templates/frondendHeader', $data);
 		$this->load->view('pelayanan/tentang', $data);
+		$this->load->view('templates/frondendFooter');
+	}
+
+	public function Contactus()
+	{
+		$data['title'] = 'Contact Us';
+		$this->load->view('templates/frondendHeader', $data);
+		$this->load->view('pelayanan/contact', $data);
 		$this->load->view('templates/frondendFooter');
 	}
 

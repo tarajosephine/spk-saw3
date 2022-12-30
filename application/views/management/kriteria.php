@@ -34,59 +34,19 @@
 										', '
 										</div>'); ?>
 					<?= $this->session->flashdata('message_kriteria'); ?>
-					<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#inputModal"
-						onclick="addKeluhanPelanggan()">Tambah Kriteria</button>
-					<table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+					<button type="button" class="btn btn-primary mb-3" data-toggle="modal" onclick="inputDataBaru()" data-target="#inputModal">Tambah Kriteria</button>
+					<table id="datatablekriteria" class="table table-striped dt-responsive nowrap w-100">
 						<thead>
 							<tr>
-								<th scope="col">No</th>
-								<th scope="col">Kode Tes</th>
+								<th scope="col">Kode Kriteria</th>
 								<th scope="col">Kriteria</th>
+								<th scope="col">Atribut</th>
 								<th scope="col">Status</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 
-						<tbody>
-							<?php $i = 1; ?>
-							<?php foreach ($kriteria as $k) : ?>
-							<tr>
-								<td scope="row"><?= $i; ?></td>
-								<td><?= $k['kd_tes']; ?></td>
-								<td><?= $k['kriteria']; ?></td>
-								<td>
-									<?php
-										if ($k['status'] == 1) {
-											echo '<h5 class="text-success">Active</h5>';
-										} else {
-											echo '<h5 class="text-danger">Nonactive</h5>';
-										}
-									?>
-								</td>
-								<td>
-									<div class="dropdown float-end">
-										<a href="#" class="dropdown-toggle text-muted arrow-none"
-											data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical font-18"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-end">
-											<!-- item-->
-											<button class="dropdown-item" data-toggle="modal" data-target="#InputModalLabel"
-												data-id="<?= $k['kd_tes']; ?>"
-												onclick="editKeluhanPelanggan(`<?= $k['kd_tes']; ?>`)"><i
-													class="mdi mdi-pencil me-1"></i> Edit </button>
-											<!-- item-->
-											<button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
-												data-id="<?= $k['kd_tes']; ?>"
-												onclick="deleteKeluhanPelanggan(`<?= $k['kd_tes']; ?>`)"><i
-													class="mdi mdi-delete me-1"></i> Hapus </button>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<?php $i++; ?>
-							<?php endforeach; ?>
-						</tbody>
+						<tbody></tbody>
 					</table>
 				</div> <!-- end card body-->
 			</div> <!-- end card -->
@@ -107,17 +67,28 @@
 				<button onclick="javascript:void(0);" data-dismiss="modal" class="btn btn-close">
 				</button>
 			</div>
-			<form method="POST">
+			<form method="post" id="formKriteria">
+				<input type="hidden" id="validasi" name="validasi">
 				<div class="modal-body">
 					<div class="form-floating mb-2">
-						<input type="text" class="form-control" id="kd_tes" name="kd_tes"
-							placeholder="Kode Tes" value="<?= $pengurutanK; ?>" disabled/>
+						<input type="text" class="form-control input" id="kd_kriteria" name="kd_kriteria" placeholder="Kode Tes" readonly/>
 						<label for="floatingInput">Kode Kriteria</label>
 					</div>
 
 					<div class="form-floating mb-2">
-						<input type="text" class="form-control" id="kriteria" name="kriteria" placeholder="Masukkan Nama Kriteria"/>
+						<input type="text" class="form-control input inputktr" id="kriteria" name="kriteria"
+							placeholder="Masukkan Nama Kriteria" />
 						<label for="floatingInput">Nama Kriteria</label>
+					</div>
+
+					<div class="form-floating mb-2">
+						<select class="form-select input inputatr" name="atribut" id="atribut" aria-label="Floating label select">
+							<option value="">Select Atribut</option>
+							<option value="Benefit">Benefit</option>
+							<option value="Cost">Cost</option>
+							<option value="Ratio">Ratio</option>
+						</select>
+						<label for="floatingJenisUsaha">Pilih Atribut</label>
 					</div>
 
 					<div class="form-floating mb-2">
@@ -131,60 +102,61 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary">Tambah</button>
+					<button type="submit" class="btn btn-success" id="submit-data">Tambahkan</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-<!-- Delete Modal-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="DeleteModalLabel">Hapus Menu</h5>
-				<button onclick="javascript:void(0);" data-dismiss="modal" class=" btn btn-close">
-				</button>
-			</div>
-			<div class="modal-body">Apakah anda yakin ingin menghapus menu ini?</div>
-			<form method="POST">
-				<input type="hidden" name="id_s" id="id_s">
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary">Hapus</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
+<script src="<?= base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
 <script type="text/javascript">
-	// input data 1
-	// ##############################################################################
-	const inpFile_1 = document.getElementById('image_1');
-	const previewContainer_1 = document.getElementById('imagePreview_1');
-	const previewImage_1 = previewContainer_1.querySelector('.input_data_1');
-	const previewDefaultText_1 = previewContainer_1.querySelector('.text_input_data_1');
-
-	inpFile_1.addEventListener("change", function () {
-		const file = this.files[0];
-
-		if (file) {
-			const reader = new FileReader();
-
-			previewDefaultText_1.style.display = "none";
-			previewImage_1.style.display = "block";
-
-			reader.addEventListener("load", function () {
-				previewImage_1.setAttribute("src", this.result);
-			});
-			reader.readAsDataURL(file);
-		} else {
-			previewDefaultText_1.style.display = null;
-			previewImage_1.style.display = null;
-			previewImage_1.setAttribute("src", "");
-		}
+	$(document).ready(function () {
+		loaddata();
 	});
+
+	function loaddata(){
+		$('#datatablekriteria').DataTable({
+			processing: true,
+			responseive: true,
+			ajax: {
+				"url": "<?= base_url('management/tableKriteria') ?>",
+				"type": "GET"
+			},
+			columns: [
+				{ data: 'kd_kriteria', name: 'kd_kriteria' },
+				{ data: 'kriteria', name: 'kriteria' },
+				{ data: 'atribut', name: 'atribut' },
+				{ data: 'status', 
+					render: function(data, type, row, meta){
+						if(row.status == '1'){
+							return `<h5 class="text-success">Active</h5>`;
+						}else if(row.status == '0'){
+							return `<h5 class="text-danger">Non - Active</h5>`;
+						}
+					}
+				},
+				{ data: 'kd_kriteria', 
+					render: function(data, type, row, meta){
+						return `
+							<div class="dropdown float-end">
+								<a href="#" class="dropdown-toggle text-muted arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="mdi mdi-dots-vertical font-18"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<!-- item-->
+									<button class="dropdown-item" data-toggle="modal" data-target="#inputModal"
+										data-id="${row.kd_kriteria}" onclick="showKriteria('${row.kd_kriteria}')"><i
+											class="mdi mdi-pencil me-1"></i> Edit </button>
+									<!-- item-->
+									<button class="dropdown-item" data-id="${row.kd_kriteria}" id="delete-data"><i
+											class="mdi mdi-delete me-1"></i> Hapus </button>
+								</div>
+							</div>
+						`;
+					}
+				}
+			]
+		});
+	}
 </script>

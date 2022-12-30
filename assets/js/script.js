@@ -1165,132 +1165,6 @@ function editUsahaData(id) {
 }
 
 // #################################################################################################################
-// WILAYAH
-
-// Kecamatan
-// ADD
-function addKec() {
-	$("#KecModalLabel").html("Tambah Data Kecamatan");
-	$(".modal-footer button[type=submit]").html("Tambah");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/kecamatan"
-	);
-	$(".modal-content form")[0].reset();
-	$(".modal-content form").validate().resetForm();
-}
-
-// Edit
-function editKec(id) {
-	$("#KecModalLabel").html("Edit Data Kecamatan");
-	$(".modal-footer button[type=submit]").html("Edit");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/editKecamatanModal"
-	);
-
-	const idedit = id;
-	$.ajax({
-		url: base_url() + "/wilayah/getKecamatanModal",
-		data: {
-			id: idedit,
-		},
-		method: "POST",
-		dataType: "json",
-		success: function (data) {
-			$("#floatingInput").val(data.nama_kec);
-			$("#id").val(data.id_kec);
-			// console.log(data);
-		},
-	});
-}
-
-// Delete
-function deleteKec(id) {
-	$(".modal-footer button[type=submit]").html("Delete");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/deleteKecamatanModal"
-	);
-
-	const iddelete = id;
-	$.ajax({
-		url: base_url() + "/wilayah/getKecamatanModal",
-		data: {
-			id: iddelete,
-		},
-		method: "POST",
-		dataType: "json",
-		success: function (data) {
-			$("#id_s").val(data.id_kec);
-			// console.log(data);
-		},
-	});
-}
-
-// Desa
-// ADD
-function addDesa() {
-	$("#DesaModalLabel").html("Tambah Data Desa");
-	$(".modal-footer button[type=submit]").html("Tambah");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/desa"
-	);
-	$(".modal-content form")[0].reset();
-	$(".modal-content form").validate().resetForm();
-}
-
-// Edit
-function editDesa(id) {
-	$("#DesaModalLabel").html("Edit Data Desa");
-	$(".modal-footer button[type=submit]").html("Edit");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/editDesaModal"
-	);
-
-	const idedit = id;
-	$.ajax({
-		url: base_url() + "/wilayah/getDesaModal",
-		data: {
-			id: idedit,
-		},
-		method: "POST",
-		dataType: "json",
-		success: function (data) {
-			$("#id_kec").val(data.id_kec);
-			$("#floatingInput").val(data.nama_desa);
-			$("#id").val(data.id_desa);
-			// console.log(data);
-		},
-	});
-}
-
-// Delete
-function deleteDesa(id) {
-	$(".modal-footer button[type=submit]").html("Delete");
-	$(".modal-content form").attr(
-		"action",
-		base_url() + "/wilayah/deleteDesaModal"
-	);
-
-	const iddelete = id;
-	$.ajax({
-		url: base_url() + "/wilayah/getDesaModal",
-		data: {
-			id: iddelete,
-		},
-		method: "POST",
-		dataType: "json",
-		success: function (data) {
-			$("#id_s").val(data.id_desa);
-			// console.log(data);
-		},
-	});
-}
-
-// #################################################################################################################
 // USER
 // ADD
 function addUserAdmin() {
@@ -1353,3 +1227,177 @@ function deleteUserAdmin(id) {
 		},
 	});
 }
+
+// #################################################################################################################
+// KRITERIA
+function inputDataBaru() {
+	$.ajax({
+		url: base_url() + "/Management/cdKriteria",
+		method: "GET",
+		dataType: "json",
+		success: function (data) {
+			$("#validasi").val("new");
+			$(".modal-footer button[type=submit]").html("Tambah");
+			$("#kd_kriteria").val(data.pengurutanK);
+			$("#kriteria").val(null);
+			$("#atribut").val(null);
+		},
+	});
+}
+
+// Show Data
+function showKriteria(id) {
+	const idedit = id;
+	$.ajax({
+		url: base_url() + "/Management/getKriteriaModal",
+		data: {
+			id: idedit,
+		},
+		method: "POST",
+		dataType: "json",
+		success: function (data) {
+			$("#validasi").val("update");
+			$(".modal-footer button[type=submit]").html("Edit");
+			$("#kd_kriteria").val(data.kd_kriteria);
+			$("#kriteria").val(data.kriteria);
+			$("#atribut").val(data.atribut);
+		},
+	});
+}
+
+// Delete
+$(document).on("click", "#delete-data", function (e) {
+	e.preventDefault();
+	let id_kriteria = $(this).data("id");
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-success",
+			cancelButton: "btn btn-danger",
+		},
+		buttonsStyling: false,
+	});
+
+	swalWithBootstrapButtons
+		.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Yes, delete it!",
+			cancelButtonText: "No, cancel!",
+			reverseButtons: true,
+		})
+		.then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: base_url() + "/Management/deleteKriteriaModal",
+					data: {
+						id: id_kriteria,
+					},
+					method: "POST",
+					dataType: "json",
+					success: function (data) {
+						$("#datatablekriteria").DataTable().ajax.reload();
+						swalWithBootstrapButtons.fire(
+							"Deleted!",
+							"Datamu sukses dihapus.",
+							"success"
+						);
+					},
+					error: function (data) {
+						// do something
+						Swal.fire({
+							icon: "error",
+							title: "Error!",
+							text: "Error Data Tidak bisa dihapus!",
+						});
+					},
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire(
+					"Cancelled",
+					"Your imaginary file is safe :)",
+					"error"
+				);
+			}
+		});
+});
+
+// ADD & EDIT MODAL
+$(document).on("click", "#submit-data", function (e) {
+	e.preventDefault();
+	let kd_kriteria = $("#kd_kriteria").val();
+	let kriteria = $("#kriteria").val();
+	let atribut = $("#atribut").val();
+	if (kd_kriteria == "" || kriteria == "" || atribut == "") {
+		if (kriteria == "") {
+			$(".inputktr").removeClass("is-valid");
+			$(".inputktr").addClass("is-invalid");
+		} else {
+			$(".inputktr").removeClass("is-invalid");
+			$(".inputktr").addClass("is-valid");
+		}
+		if (atribut == "") {
+			$(".inputatr").removeClass("is-valid");
+			$(".inputatr").addClass("is-invalid");
+		} else {
+			$(".inputatr").removeClass("is-invalid");
+			$(".inputatr").addClass("is-valid");
+		}
+		Swal.fire({
+			icon: "warning",
+			title: "Oops...",
+			text: "Harus diinput semua!",
+		});
+	} else {
+		var data = $("#formKriteria").serialize();
+		$(".input").removeClass("is-invalid");
+		$.ajax({
+			url: base_url() + "/Management/updateKriteria",
+			type: "POST",
+			data: data,
+			processData: false,
+			cache: false,
+			async: false,
+			dataType: "json",
+			success: function (response) {
+				if (response == 1) {
+					$("#datatablekriteria").DataTable().ajax.reload();
+					$.ajax({
+						url: base_url() + "/Management/cdKriteria",
+						method: "GET",
+						dataType: "json",
+						success: function (data) {
+							$(".input").addClass("is-valid");
+							Swal.fire({
+								icon: "success",
+								title: "Selamat",
+								text: "Anda berhasil Memasukkan Data!",
+							});
+							$("#kd_kriteria").val(data.pengurutanK);
+							$("#kriteria").val(null);
+							$("#atribut").val(null);
+							// angka 3000 dibawah ini artinya pesan akan hilang dalam 3 detik setelah muncul
+							setTimeout(function () {
+								$(".input").removeClass("is-valid");
+							}, 3000);
+						},
+					});
+				} else {
+					$(".input").addClass("is-invalid");
+				}
+			},
+			error: function (data) {
+				// do something
+				Swal.fire({
+					icon: "error",
+					title: "Error!",
+					text: "Error Data Tidak bisa di masukkan ke Database!",
+				});
+			},
+		});
+	}
+});

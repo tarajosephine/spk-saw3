@@ -28,6 +28,9 @@
     <link href="<?= base_url(); ?>assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css">
     <!-- third party css end -->
 
+	<!-- sweetalert -->
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
 
 </head>

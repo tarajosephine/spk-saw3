@@ -58,7 +58,7 @@ class Menu_model extends CI_Model
 
 	// Kriteria
 	public function kodeKriteria(){
-		$query = "SELECT max(kd_tes) as kodeTerbesar FROM tes_minat";
+		$query = "SELECT max(kd_kriteria) as kodeTerbesar FROM kriteria";
 		return $this->db->query($query)->row_array();
 	}
 
@@ -85,5 +85,15 @@ class Menu_model extends CI_Model
 		$this->db->from("keluhan k");
 		$this->db->join('pelanggan p','k.id_p=p.cid','left');
 		return $this->db->get();
+	}
+
+	public function editKriteriaById($id, $data)
+	{
+		return $this->db->where('kd_kriteria', $id)->update('kriteria', $data);
+	}
+
+	public function deleteKriteriaById($id)
+	{
+		return $this->db->delete('kriteria', ['kd_kriteria' => $id]);
 	}
 }

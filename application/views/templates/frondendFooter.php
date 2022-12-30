@@ -262,6 +262,10 @@
 <script src="<?= base_url(); ?>assets/js/vendor/dataTables.keyTable.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/vendor/dataTables.select.min.js"></script>
 
+<!-- sweetalert -->
+<script src="<?= base_url(); ?>assets/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+
 <!-- demo app -->
 <script src="<?= base_url(); ?>assets/js/pages/demo.form-wizard.js"></script>
 <!-- end demo js-->

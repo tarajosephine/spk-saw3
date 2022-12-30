@@ -26,6 +26,9 @@
 	<link href="<?= base_url(); ?>assets/frontend/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
 	<link href="<?= base_url(); ?>assets/frontend/vendor/aos/aos.css" rel="stylesheet">
 
+	<!-- sweetalert -->
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+
 	<!-- Template Main CSS File -->
 	<link href="<?= base_url(); ?>assets/frontend/css/style.css" rel="stylesheet">
 	<link href="<?= base_url(); ?>assets/frontend/css/style2.css" rel="stylesheet">
@@ -55,16 +58,16 @@
 						<li><a href="<?= base_url(); ?>Pelayanan">Beranda</a></li>
 					<?php endif; ?>
 
-					<?php if ($title == "Pelayanan") : ?>
-						<li class="active"><a href="<?= base_url(); ?>Pelayanan/Pelayanan"><b>Pelayanan</b></a></li>
-					<?php else : ?>
-						<li><a href="<?= base_url(); ?>Pelayanan/Pelayanan">Pelayanan</a></li>
-					<?php endif; ?>
-
 					<?php if ($title == "Tentang") : ?>
 						<li class="active"><a href="<?= base_url(); ?>Pelayanan/Tentang"><b>Tentang</b></a></li>
 					<?php else : ?>
 						<li><a href="<?= base_url(); ?>Pelayanan/Tentang">Tentang</a></li>
+					<?php endif; ?>
+
+					<?php if ($title == "Contact Us") : ?>
+						<li class="active"><a href="<?= base_url(); ?>Pelayanan/Contactus"><b>Contact Us</b></a></li>
+					<?php else : ?>
+						<li><a href="<?= base_url(); ?>Pelayanan/Contactus">Contact Us</a></li>
 					<?php endif; ?>
 				</ul>
 			</nav><!-- .nav-menu -->
