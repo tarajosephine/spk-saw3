@@ -66,8 +66,8 @@
 				<input type="hidden" id="validasi" name="validasi">
 				<div class="modal-body">
 					<div class="form-floating mb-2">
-						<input type="text" class="form-control" id="kd_tes" name="kd_tes"
-							placeholder="Kode Tes Minat" readonly />
+						<input type="text" class="form-control" id="kd_tes" name="kd_tes" placeholder="Kode Tes Minat"
+							readonly />
 						<label for="floatingInput">Kode Tes Minat</label>
 					</div>
 
@@ -137,8 +137,6 @@
 									<i class="mdi mdi-dots-vertical font-18"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-end">
-									<!-- item-->
-									<a class="dropdown-item" href="<?= base_url(); ?>management/showSoalTes/${row.kd_tes}"><i class="mdi mdi-clipboard-text me-1"></i> Soal Tes </a>
 									<!-- item-->
 									<button class="dropdown-item" data-toggle="modal" data-target="#inputModal"
 										data-id="${row.kd_tes}" onclick="showTesMinat('${row.kd_tes}')"><i

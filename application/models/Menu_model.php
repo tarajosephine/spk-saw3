@@ -116,6 +116,23 @@ class Menu_model extends CI_Model
 		return $this->db->delete('bobot', ['kd_bobot' => $id]);
 	}
 
+	// Paket
+	public function kodePaket()
+	{
+		$query = "SELECT max(kd_paket) as kodeTerbesar FROM paket";
+		return $this->db->query($query)->row_array();
+	}
+
+	public function editPaketById($id, $data)
+	{
+		return $this->db->where('kd_paket', $id)->update('paket', $data);
+	}
+
+	public function deletePaketById($id)
+	{
+		return $this->db->delete('paket', ['kd_paket' => $id]);
+	}
+
 	// Tes Minat
 	public function kodeTesMinat()
 	{

@@ -1389,6 +1389,198 @@ $(document).on("click", "#submit-data-bobot", function (e) {
 });
 
 // #################################################################################################################
+// PAKET WEDDING
+function inputDataBaruPaket() {
+	$.ajax({
+		url: base_url() + "/Management/cdPaket",
+		method: "GET",
+		dataType: "json",
+		success: function (data) {
+			$("#validasi").val("new");
+			$(".modal-footer button[type=submit]").html("Tambah");
+			$("#kd_paket").val(data.pengurutanK);
+			$("#paket").val(null);
+			$("#harga").val(null);
+			$("#dekorasi").val(null);
+			$("#harga_dekorasi").val(null);
+			$("#brp").val(null);
+			$("#harga_brp").val(null);
+			$("#catering").val(null);
+			$("#harga_catering").val(null);
+			$("#dokumentasi").val(null);
+			$("#harga_dokumentasi").val(null);
+			$("#ah").val(null);
+			$("#harga_ah").val(null);
+			$("#jumlah_tamu").val(null);
+		},
+	});
+}
+
+// Show Data
+function showPaket(id) {
+	const idedit = id;
+	$.ajax({
+		url: base_url() + "/Management/getPaketModal",
+		data: {
+			id: idedit,
+		},
+		method: "POST",
+		dataType: "json",
+		success: function (data) {
+			$("#dataModalLabel").html("Edit Data");
+			$("#validasi").val("update");
+			$(".modal-footer button[type=submit]").html("Edit");
+			$("#kd_tes").val(data.kd_paket);
+			$("#paket").val(data.paket);
+			$("#harga").val(data.harga);
+		},
+	});
+}
+
+// Delete
+$(document).on("click", "#delete-data-paket", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/deletePaketModal";
+	let id_ne = $(this).data("id");
+	deleteData(url, id_ne);
+});
+
+// ADD & EDIT MODAL
+$(document).on("click", "#submit-data-paket", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/updatePaket";
+	let kd_paket = $("#kd_paket").val();
+	let paket = $("#paket").val();
+	let harga = $("#harga").val();
+	let dekorasi = $("#dekorasi").val();
+	let harga_dekorasi = $("#harga_dekorasi").val();
+	let brp = $("#brp").val();
+	let harga_brp = $("#harga_brp").val();
+	let catering = $("#catering").val();
+	let harga_catering = $("#harga_catering").val();
+	let dokumentasi = $("#dokumentasi").val();
+	let harga_dokumentasi = $("#harga_dokumentasi").val();
+	let ah = $("#ah").val();
+	let harga_ah = $("#harga_ah").val();
+	let jumlah_tamu = $("#jumlah_tamu").val();
+
+	if (kd_paket == "" || paket == "" || harga == "" || dekorasi == "" || harga_dekorasi == "" || brp == "" || harga_brp == "" || catering == "" || harga_catering == "" || dokumentasi == "" || harga_dokumentasi == "" || ah == "" || harga_ah == "" || jumlah_tamu == "") {
+		if (paket == "") {
+			$(".input1").removeClass("is-valid");
+			$(".input1").addClass("is-invalid");
+		} else {
+			$(".input1").removeClass("is-invalid");
+			$(".input1").addClass("is-valid");
+		}
+
+		if (harga == "") {
+			$(".input2").removeClass("is-valid");
+			$(".input2").addClass("is-invalid");
+		} else {
+			$(".input2").removeClass("is-invalid");
+			$(".input2").addClass("is-valid");
+		}
+
+		if (dekorasi == "") {
+			$(".input3").removeClass("is-valid");
+			$(".input3").addClass("is-invalid");
+		} else {
+			$(".input3").removeClass("is-invalid");
+			$(".input3").addClass("is-valid");
+		}
+
+		if (harga_dekorasi == "") {
+			$(".input4").removeClass("is-valid");
+			$(".input4").addClass("is-invalid");
+		} else {
+			$(".input4").removeClass("is-invalid");
+			$(".input4").addClass("is-valid");
+		}
+
+		if (brp == "") {
+			$(".input5").removeClass("is-valid");
+			$(".input5").addClass("is-invalid");
+		} else {
+			$(".input5").removeClass("is-invalid");
+			$(".input5").addClass("is-valid");
+		}
+
+		if (harga_brp == "") {
+			$(".input6").removeClass("is-valid");
+			$(".input6").addClass("is-invalid");
+		} else {
+			$(".input6").removeClass("is-invalid");
+			$(".input6").addClass("is-valid");
+		}
+		
+		if (catering == "") {
+			$(".input7").removeClass("is-valid");
+			$(".input7").addClass("is-invalid");
+		} else {
+			$(".input7").removeClass("is-invalid");
+			$(".input7").addClass("is-valid");
+		}
+
+		if (harga_catering == "") {
+			$(".input8").removeClass("is-valid");
+			$(".input8").addClass("is-invalid");
+		} else {
+			$(".input8").removeClass("is-invalid");
+			$(".input8").addClass("is-valid");
+		}
+
+		if (dokumentasi == "") {
+			$(".input9").removeClass("is-valid");
+			$(".input9").addClass("is-invalid");
+		} else {
+			$(".input9").removeClass("is-invalid");
+			$(".input9").addClass("is-valid");
+		}
+
+		if (harga_dokumentasi == "") {
+			$(".input10").removeClass("is-valid");
+			$(".input10").addClass("is-invalid");
+		} else {
+			$(".input10").removeClass("is-invalid");
+			$(".input10").addClass("is-valid");
+		}
+
+		if (ah == "") {
+			$(".input11").removeClass("is-valid");
+			$(".input11").addClass("is-invalid");
+		} else {
+			$(".input11").removeClass("is-invalid");
+			$(".input11").addClass("is-valid");
+		}
+
+		if (harga_ah == "") {
+			$(".input12").removeClass("is-valid");
+			$(".input12").addClass("is-invalid");
+		} else {
+			$(".input12").removeClass("is-invalid");
+			$(".input12").addClass("is-valid");
+		}
+
+		if (jumlah_tamu == "") {
+			$(".input13").removeClass("is-valid");
+			$(".input13").addClass("is-invalid");
+		} else {
+			$(".input13").removeClass("is-invalid");
+			$(".input13").addClass("is-valid");
+		}
+		Swal.fire({
+			icon: "warning",
+			title: "Oops...",
+			text: "Harus diinput semua!",
+		});
+	} else {
+		var data = $("#formData").serialize();
+		$(".input").removeClass("is-invalid");
+		updateData(url, data);
+	}
+});
+
+// #################################################################################################################
 // TES MINAT
 function inputDataBaruTesMinat() {
 	$.ajax({
@@ -1435,7 +1627,7 @@ $(document).on("click", "#delete-data-tes-minat", function (e) {
 // ADD & EDIT MODAL
 $(document).on("click", "#submit-data-tes-minat", function (e) {
 	e.preventDefault();
-	let url = base_url() + "/Management/updateBobot";
+	let url = base_url() + "/Management/updateTesMinat";
 	let kd_tes = $("#kd_tes").val();
 	let kriteria = $("#kriteria").val();
 	if (kd_tes == "" || kriteria == "") {
