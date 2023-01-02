@@ -1230,7 +1230,7 @@ function deleteUserAdmin(id) {
 
 // #################################################################################################################
 // KRITERIA
-function inputDataBaru() {
+function inputDataBaruKriteria() {
 	$.ajax({
 		url: base_url() + "/Management/cdKriteria",
 		method: "GET",
@@ -1256,6 +1256,7 @@ function showKriteria(id) {
 		method: "POST",
 		dataType: "json",
 		success: function (data) {
+			$("#dataModalLabel").html("Edit Data");
 			$("#validasi").val("update");
 			$(".modal-footer button[type=submit]").html("Edit");
 			$("#kd_kriteria").val(data.kd_kriteria);
@@ -1266,9 +1267,251 @@ function showKriteria(id) {
 }
 
 // Delete
-$(document).on("click", "#delete-data", function (e) {
+$(document).on("click", "#delete-data-kriteria", function (e) {
 	e.preventDefault();
-	let id_kriteria = $(this).data("id");
+	let url = base_url() + "/Management/deleteKriteriaModal";
+	let id_ne = $(this).data("id");
+	deleteData(url, id_ne);
+});
+
+// ADD & EDIT MODAL
+$(document).on("click", "#submit-data-kriteria", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/updateKriteria";
+	let kd_kriteria = $("#kd_kriteria").val();
+	let kriteria = $("#kriteria").val();
+	let atribut = $("#atribut").val();
+	if (kd_kriteria == "" || kriteria == "" || atribut == "") {
+		if (kriteria == "") {
+			$(".input1").removeClass("is-valid");
+			$(".input1").addClass("is-invalid");
+		} else {
+			$(".input1").removeClass("is-invalid");
+			$(".input1").addClass("is-valid");
+		}
+		if (atribut == "") {
+			$(".input2").removeClass("is-valid");
+			$(".input2").addClass("is-invalid");
+		} else {
+			$(".input2").removeClass("is-invalid");
+			$(".input2").addClass("is-valid");
+		}
+		Swal.fire({
+			icon: "warning",
+			title: "Oops...",
+			text: "Harus diinput semua!",
+		});
+	} else {
+		var data = $("#formData").serialize();
+		$(".input").removeClass("is-invalid");
+		updateData(url, data);
+	}
+});
+
+// #################################################################################################################
+// BOBOT
+function inputDataBaruBobot() {
+	$.ajax({
+		url: base_url() + "/Management/cdBobot",
+		method: "GET",
+		dataType: "json",
+		success: function (data) {
+			$("#validasi").val("new");
+			$(".modal-footer button[type=submit]").html("Tambah");
+			$("#kd_bobot").val(data.pengurutanK);
+			$("#nilai_bobot").val(null);
+			$("#bobot").val(null);
+		},
+	});
+}
+
+// Show Data
+function showBobot(id) {
+	const idedit = id;
+	$.ajax({
+		url: base_url() + "/Management/getBobotModal",
+		data: {
+			id: idedit,
+		},
+		method: "POST",
+		dataType: "json",
+		success: function (data) {
+			$("#dataModalLabel").html("Edit Data");
+			$("#validasi").val("update");
+			$(".modal-footer button[type=submit]").html("Edit");
+			$("#kd_bobot").val(data.kd_bobot);
+			$("#nilai_bobot").val(data.nilai_bobot);
+			$("#bobot").val(data.bobot);
+		},
+	});
+}
+
+// Delete
+$(document).on("click", "#delete-data-bobot", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/deleteBobotModal";
+	let id_ne = $(this).data("id");
+	deleteData(url, id_ne);
+});
+
+// ADD & EDIT MODAL
+$(document).on("click", "#submit-data-bobot", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/updateBobot";
+	let kd_bobot = $("#kd_bobot").val();
+	let nilai_bobot = $("#nilai_bobot").val();
+	let bobot = $("#bobot").val();
+	if (kd_bobot == "" || nilai_bobot == "" || bobot == "") {
+		if (nilai_bobot == "") {
+			$(".input1").removeClass("is-valid");
+			$(".input1").addClass("is-invalid");
+		} else {
+			$(".input1").removeClass("is-invalid");
+			$(".input1").addClass("is-valid");
+		}
+		if (bobot == "") {
+			$(".input2").removeClass("is-valid");
+			$(".input2").addClass("is-invalid");
+		} else {
+			$(".input2").removeClass("is-invalid");
+			$(".input2").addClass("is-valid");
+		}
+		Swal.fire({
+			icon: "warning",
+			title: "Oops...",
+			text: "Harus diinput semua!",
+		});
+	} else {
+		var data = $("#formData").serialize();
+		$(".input").removeClass("is-invalid");
+		updateData(url, data);
+	}
+});
+
+// #################################################################################################################
+// TES MINAT
+function inputDataBaruTesMinat() {
+	$.ajax({
+		url: base_url() + "/Management/cdTesMinat",
+		method: "GET",
+		dataType: "json",
+		success: function (data) {
+			$("#validasi").val("new");
+			$(".modal-footer button[type=submit]").html("Tambah");
+			$("#kd_tes").val(data.pengurutanK);
+			$("#kriteria").val(null);
+		},
+	});
+}
+
+// Show Data
+function showTesMinat(id) {
+	const idedit = id;
+	$.ajax({
+		url: base_url() + "/Management/getTesMinatModal",
+		data: {
+			id: idedit,
+		},
+		method: "POST",
+		dataType: "json",
+		success: function (data) {
+			$("#dataModalLabel").html("Edit Data");
+			$("#validasi").val("update");
+			$(".modal-footer button[type=submit]").html("Edit");
+			$("#kd_tes").val(data.kd_tes);
+			$("#kriteria").val(data.kriteria);
+		},
+	});
+}
+
+// Delete
+$(document).on("click", "#delete-data-tes-minat", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/deleteTesMinatModal";
+	let id_ne = $(this).data("id");
+	deleteData(url, id_ne);
+});
+
+// ADD & EDIT MODAL
+$(document).on("click", "#submit-data-tes-minat", function (e) {
+	e.preventDefault();
+	let url = base_url() + "/Management/updateBobot";
+	let kd_tes = $("#kd_tes").val();
+	let kriteria = $("#kriteria").val();
+	if (kd_tes == "" || kriteria == "") {
+		if (kriteria == "") {
+			$(".input1").removeClass("is-valid");
+			$(".input1").addClass("is-invalid");
+		} else {
+			$(".input1").removeClass("is-invalid");
+			$(".input1").addClass("is-valid");
+		}
+		Swal.fire({
+			icon: "warning",
+			title: "Oops...",
+			text: "Harus diinput semua!",
+		});
+	} else {
+		var data = $("#formData").serialize();
+		$(".input").removeClass("is-invalid");
+		updateData(url, data);
+	}
+});
+
+// Control Update and Delete ALL forms
+function updateData(url, data) {
+	$.ajax({
+		url: url,
+		type: "POST",
+		data: data,
+		processData: false,
+		cache: false,
+		async: false,
+		dataType: "json",
+		success: function (response) {
+			if (response.status == 200) {
+				$("#datatable").DataTable().ajax.reload();
+				$(".input").addClass("is-valid");
+				if (response.pesan == "new") {
+					$.ajax({
+						url: base_url() + response.url,
+						method: "GET",
+						dataType: "json",
+						success: function (data) {
+							$(response.kd_input).val(data.pengurutanK);
+							$(".input").val(null);
+							Swal.fire({
+								icon: "success",
+								title: "Selamat",
+								text: "Data berhasil ditambah!",
+							});
+						},
+					});
+				} else if (response.pesan == "update") {
+					Swal.fire({
+						icon: "success",
+						title: "Selamat",
+						text: "Data berhasil diupdate!",
+					});
+				}
+				// angka 3000 dibawah ini artinya pesan akan hilang dalam 3 detik setelah muncul
+				setTimeout(function () {
+					$(".input").removeClass("is-valid");
+				}, 3000);
+			}
+		},
+		error: function (response) {
+			// do something
+			Swal.fire({
+				icon: "error",
+				title: "Error!",
+				text: "Error Data Tidak bisa di masukkan ke Databaseeeeeeee!",
+			});
+		},
+	});
+}
+
+function deleteData(url, data) {
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
 			confirmButton: "btn btn-success",
@@ -1290,14 +1533,14 @@ $(document).on("click", "#delete-data", function (e) {
 		.then((result) => {
 			if (result.isConfirmed) {
 				$.ajax({
-					url: base_url() + "/Management/deleteKriteriaModal",
+					url: url,
 					data: {
-						id: id_kriteria,
+						id: data,
 					},
 					method: "POST",
 					dataType: "json",
 					success: function (data) {
-						$("#datatablekriteria").DataTable().ajax.reload();
+						$("#datatable").DataTable().ajax.reload();
 						swalWithBootstrapButtons.fire(
 							"Deleted!",
 							"Datamu sukses dihapus.",
@@ -1324,80 +1567,4 @@ $(document).on("click", "#delete-data", function (e) {
 				);
 			}
 		});
-});
-
-// ADD & EDIT MODAL
-$(document).on("click", "#submit-data", function (e) {
-	e.preventDefault();
-	let kd_kriteria = $("#kd_kriteria").val();
-	let kriteria = $("#kriteria").val();
-	let atribut = $("#atribut").val();
-	if (kd_kriteria == "" || kriteria == "" || atribut == "") {
-		if (kriteria == "") {
-			$(".inputktr").removeClass("is-valid");
-			$(".inputktr").addClass("is-invalid");
-		} else {
-			$(".inputktr").removeClass("is-invalid");
-			$(".inputktr").addClass("is-valid");
-		}
-		if (atribut == "") {
-			$(".inputatr").removeClass("is-valid");
-			$(".inputatr").addClass("is-invalid");
-		} else {
-			$(".inputatr").removeClass("is-invalid");
-			$(".inputatr").addClass("is-valid");
-		}
-		Swal.fire({
-			icon: "warning",
-			title: "Oops...",
-			text: "Harus diinput semua!",
-		});
-	} else {
-		var data = $("#formKriteria").serialize();
-		$(".input").removeClass("is-invalid");
-		$.ajax({
-			url: base_url() + "/Management/updateKriteria",
-			type: "POST",
-			data: data,
-			processData: false,
-			cache: false,
-			async: false,
-			dataType: "json",
-			success: function (response) {
-				if (response == 1) {
-					$("#datatablekriteria").DataTable().ajax.reload();
-					$.ajax({
-						url: base_url() + "/Management/cdKriteria",
-						method: "GET",
-						dataType: "json",
-						success: function (data) {
-							$(".input").addClass("is-valid");
-							Swal.fire({
-								icon: "success",
-								title: "Selamat",
-								text: "Anda berhasil Memasukkan Data!",
-							});
-							$("#kd_kriteria").val(data.pengurutanK);
-							$("#kriteria").val(null);
-							$("#atribut").val(null);
-							// angka 3000 dibawah ini artinya pesan akan hilang dalam 3 detik setelah muncul
-							setTimeout(function () {
-								$(".input").removeClass("is-valid");
-							}, 3000);
-						},
-					});
-				} else {
-					$(".input").addClass("is-invalid");
-				}
-			},
-			error: function (data) {
-				// do something
-				Swal.fire({
-					icon: "error",
-					title: "Error!",
-					text: "Error Data Tidak bisa di masukkan ke Database!",
-				});
-			},
-		});
-	}
-});
+}

@@ -22,7 +22,8 @@ class Management extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function inputPelanggan(){
+	public function inputPelanggan()
+	{
 		$data = [
 			'nama' => $this->input->post('nama'),
 			'no_hp' => $this->input->post('no_hp'),
@@ -83,6 +84,8 @@ class Management extends CI_Controller
 		redirect('management');
 	}
 
+	// ##################################################################################################################################
+	// Kriteria
 	public function kriteria()
 	{
 		$data['title'] = 'Kriteria';
@@ -90,28 +93,30 @@ class Management extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('management/kriteria', $data);
+		$this->load->view('management/kriteria');
 		$this->load->view('templates/footer');
 	}
 
 	public function cdKriteria()
-    {
-		$kodeKriteria = $this->menu->kodeKriteria();
+	{
+		$kode = $this->menu->kodeKriteria();
 
-		$urutan = substr($kodeKriteria['kodeTerbesar'], 1, 4);
+		$urutan = substr($kode['kodeTerbesar'], 1, 4);
 		$urutan++;
 		$huruf = "K";
-		$kodeKriteria = $huruf.sprintf("%03s", $urutan);
-		$data['pengurutanK'] = $kodeKriteria;
+		$kode = $huruf . sprintf("%03s", $urutan);
+		$data['pengurutanK'] = $kode;
 		echo json_encode($data);
 	}
 
-	public function tableKriteria(){
+	public function tableKriteria()
+	{
 		$output['data'] = $this->db->get('kriteria')->result_array();
 		$this->output->set_content_type('application/json')->set_output(json_encode($output));
 	}
 
-	public function updateKriteria(){
+	public function updateKriteria()
+	{
 		$vld = $this->input->post('validasi');
 		if ($this->input->post('is_active') == null) {
 			$is_active = '0';
@@ -124,12 +129,22 @@ class Management extends CI_Controller
 			'atribut' => $this->input->post('atribut'),
 			'status' => $is_active,
 		];
-		if($vld == "new"){
-			$result = $this->db->insert('kriteria', $data);
-		}else if($vld == "update"){
-			$result = $this->menu->editKriteriaById($_POST['kd_kriteria'], $data);
+		if ($vld == "new") {
+			$vl = [
+				'pesan' => 'new',
+				'url' => '/Management/cdKriteria',
+				'kd_input' => '#kd_kriteria',
+				'status' => 200,
+			];
+			$this->db->insert('kriteria', $data);
+		} else if ($vld == "update") {
+			$vl = [
+				'pesan' => 'update',
+				'status' => 200,
+			];
+			$this->menu->editKriteriaById($_POST['kd_kriteria'], $data);
 		}
-		echo json_decode($result);
+		echo json_encode($vl, JSON_UNESCAPED_SLASHES);
 	}
 
 	public function getKriteriaModal()
@@ -141,6 +156,155 @@ class Management extends CI_Controller
 	public function deleteKriteriaModal()
 	{
 		$result = $this->menu->deleteKriteriaById($this->input->post('id'));
+		echo json_decode($result);
+	}
+
+	//##################################################################################################################################
+	// Bobot
+	public function bobot()
+	{
+		$data['title'] = 'Bobot';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('management/bobot');
+		$this->load->view('templates/footer');
+	}
+
+	public function cdBobot()
+	{
+		$kode = $this->menu->kodeBobot();
+
+		$urutan = substr($kode['kodeTerbesar'], 1, 4);
+		$urutan++;
+		$huruf = "B";
+		$kode = $huruf . sprintf("%03s", $urutan);
+		$data['pengurutanK'] = $kode;
+		echo json_encode($data);
+	}
+
+	public function tableBobot()
+	{
+		$output['data'] = $this->db->get('bobot')->result_array();
+		$this->output->set_content_type('application/json')->set_output(json_encode($output));
+	}
+
+	public function updateBobot()
+	{
+		$vld = $this->input->post('validasi');
+		if ($this->input->post('is_active') == null) {
+			$is_active = '0';
+		} else {
+			$is_active = $this->input->post('is_active');
+		}
+		$data = [
+			'kd_bobot' => $this->input->post('kd_bobot'),
+			'nilai_bobot' => $this->input->post('nilai_bobot'),
+			'bobot' => $this->input->post('bobot'),
+			'status' => $is_active,
+		];
+		if ($vld == "new") {
+			$vl = [
+				'pesan' => 'new',
+				'url' => '/Management/cdBobot',
+				'kd_input' => '#kd_bobot',
+				'status' => 200,
+			];
+			$this->db->insert('bobot', $data);
+		} else if ($vld == "update") {
+			$vl = [
+				'pesan' => 'update',
+				'status' => 200,
+			];
+			$this->menu->editBobotById($_POST['kd_bobot'], $data);
+		}
+		echo json_encode($vl, JSON_UNESCAPED_SLASHES);
+	}
+
+	public function getBobotModal()
+	{
+		$data = $this->db->get_where('bobot', ['kd_bobot' => $_POST['id']])->row_array();
+		echo json_encode($data);
+	}
+
+	public function deleteBobotModal()
+	{
+		$result = $this->menu->deleteBobotById($this->input->post('id'));
+		echo json_decode($result);
+	}
+
+	//##################################################################################################################################
+	// Tes Minat
+	public function tesMinat()
+	{
+		$data['title'] = 'Tes Minat';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('management/tesMinat');
+		$this->load->view('templates/footer');
+	}
+
+	public function cdTesMinat()
+	{
+		$kode = $this->menu->kodeTesMinat();
+
+		$urutan = substr($kode['kodeTerbesar'], 1, 4);
+		$urutan++;
+		$huruf = "T";
+		$kode = $huruf . sprintf("%03s", $urutan);
+		$data['pengurutanK'] = $kode;
+		echo json_encode($data);
+	}
+
+	public function tableTesMinat()
+	{
+		$output['data'] = $this->db->get('tes_minat')->result_array();
+		$this->output->set_content_type('application/json')->set_output(json_encode($output));
+	}
+
+	public function updateTesMinat()
+	{
+		$vld = $this->input->post('validasi');
+		if ($this->input->post('is_active') == null) {
+			$is_active = '0';
+		} else {
+			$is_active = $this->input->post('is_active');
+		}
+		$data = [
+			'kd_tes' => $this->input->post('kd_tes'),
+			'kriteria' => $this->input->post('kriteria'),
+			'status' => $is_active,
+		];
+		if ($vld == "new") {
+			$vl = [
+				'pesan' => 'new',
+				'url' => '/Management/cdTesMinat',
+				'kd_input' => '#kd_tes',
+				'status' => 200,
+			];
+			$this->db->insert('tes_minat', $data);
+		} else if ($vld == "update") {
+			$vl = [
+				'pesan' => 'update',
+				'status' => 200,
+			];
+			$this->menu->editTesMinatById($_POST['kd_tes'], $data);
+		}
+		echo json_encode($vl, JSON_UNESCAPED_SLASHES);
+	}
+
+	public function getTesMinatModal()
+	{
+		$data = $this->db->get_where('tes_minat', ['kd_tes' => $_POST['id']])->row_array();
+		echo json_encode($data);
+	}
+
+	public function deleteTesMinatModal()
+	{
+		$result = $this->menu->deleteTesMinatById($this->input->post('id'));
 		echo json_decode($result);
 	}
 }

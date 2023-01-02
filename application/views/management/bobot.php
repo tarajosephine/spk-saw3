@@ -15,7 +15,7 @@
 						</div>
 					</form>
 				</div>
-				<h4 class="page-title">Data Kriteria</h4>
+				<h4 class="page-title">Data Bobot</h4>
 			</div>
 		</div>
 	</div>
@@ -28,16 +28,16 @@
 
 					<h4 class="header-title"><?= $title; ?></h4>
 					<p class="text-muted font-14">
-						Menu ini digunakan untuk data Kriteria
+						Menu ini digunakan untuk data Bobot
 					</p>
-					<button type="button" class="btn btn-primary mb-3" data-toggle="modal" onclick="inputDataBaruKriteria()"
-						data-target="#inputModal">Tambah Kriteria</button>
+					<button type="button" class="btn btn-primary mb-3" data-toggle="modal" onclick="inputDataBaruBobot()"
+						data-target="#inputModal">Tambah Bobot</button>
 					<table id="datatable" class="table table-striped dt-responsive nowrap w-100">
 						<thead>
 							<tr>
-								<th scope="col">Kode Kriteria</th>
-								<th scope="col">Kriteria</th>
-								<th scope="col">Atribut</th>
+								<th scope="col">Kode Bobot</th>
+								<th scope="col">Nilai Bobot</th>
+								<th scope="col">Nama Bobot</th>
 								<th scope="col">Status</th>
 								<th scope="col">Action</th>
 							</tr>
@@ -55,12 +55,12 @@
 <!-- container -->
 
 <!-- Modal -->
-<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="dataModalLabel"
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="InputModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="dataModalLabel">Tambah Data</h5>
+				<h5 class="modal-title" id="InputModalLabel">Tambah Bobot</h5>
 				<button onclick="javascript:void(0);" data-dismiss="modal" class="btn btn-close">
 				</button>
 			</div>
@@ -68,29 +68,34 @@
 				<input type="hidden" id="validasi" name="validasi">
 				<div class="modal-body">
 					<div class="form-floating mb-2">
-						<input type="text" class="form-control" id="kd_kriteria" name="kd_kriteria" placeholder="Kode Kriteria" readonly/>
-						<label for="floatingInput">Kode Kriteria</label>
+						<input type="text" class="form-control" id="kd_bobot" name="kd_bobot"
+							placeholder="Kode Bobot" readonly />
+						<label for="floatingInput">Kode Bobot</label>
 					</div>
 
 					<div class="form-floating mb-2">
-						<input type="text" class="form-control input input1" id="kriteria" name="kriteria"
-							placeholder="Masukkan Nama Kriteria" />
-						<label for="floatingInput">Nama Kriteria</label>
+						<input type="number" class="form-control input inputktr" id="nilai_bobot" name="nilai_bobot"
+							placeholder="Masukkan Nilai Bobot" />
+						<label for="floatingInput">Nilai Bobot</label>
 					</div>
 
 					<div class="form-floating mb-2">
-						<select class="form-select input input2" name="atribut" id="atribut" aria-label="Floating label select">
-							<option value="">Select Atribut</option>
-							<option value="Benefit">Benefit</option>
-							<option value="Cost">Cost</option>
-							<option value="Ratio">Ratio</option>
+						<select class="form-select input inputatr" name="bobot" id="bobot"
+							aria-label="Floating label select">
+							<option value="">Select Bobot</option>
+							<option value="sb">Sangat Baik</option>
+							<option value="b">Baik</option>
+							<option value="cb">Cukup Baik</option>
+							<option value="kb">Kurang Baik</option>
+							<option value="skb">Sangat Kurang Baik</option>
 						</select>
-						<label for="floatingJenisUsaha">Pilih Atribut</label>
+						<label for="floatingJenisUsaha">Pilih Bobot</label>
 					</div>
 
 					<div class="form-floating mb-2">
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active" checked>
+							<input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active"
+								checked>
 							<label class="form-check-label" for="is_active">
 								Active?
 							</label>
@@ -99,7 +104,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-success" id="submit-data-kriteria">Tambahkan</button>
+					<button type="submit" class="btn btn-success" id="submit-data-bobot">Tambahkan</button>
 				</div>
 			</form>
 		</div>
@@ -112,29 +117,39 @@
 		loaddata();
 	});
 
-	function loaddata(){
+	function loaddata() {
 		$('#datatable').DataTable({
 			processing: true,
 			responseive: true,
 			ajax: {
-				"url": "<?= base_url('management/tableKriteria') ?>",
+				"url": "<?= base_url('management/tableBobot') ?>",
 				"type": "GET"
 			},
-			columns: [
-				{ data: 'kd_kriteria', name: 'kd_kriteria' },
-				{ data: 'kriteria', name: 'kriteria' },
-				{ data: 'atribut', name: 'atribut' },
-				{ data: 'status', 
-					render: function(data, type, row, meta){
-						if(row.status == '1'){
+			columns: [{
+					data: 'kd_bobot',
+					name: 'kd_bobot'
+				},
+				{
+					data: 'nilai_bobot',
+					name: 'nilai_bobot'
+				},
+				{
+					data: 'bobot',
+					name: 'bobot'
+				},
+				{
+					data: 'status',
+					render: function (data, type, row, meta) {
+						if (row.status == '1') {
 							return `<h5 class="text-success">Active</h5>`;
-						}else if(row.status == '0'){
+						} else if (row.status == '0') {
 							return `<h5 class="text-danger">Non - Active</h5>`;
 						}
 					}
 				},
-				{ data: 'kd_kriteria', 
-					render: function(data, type, row, meta){
+				{
+					data: 'kd_bobot',
+					render: function (data, type, row, meta) {
 						return `
 							<div class="dropdown float-end">
 								<a href="#" class="dropdown-toggle text-muted arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,10 +158,10 @@
 								<div class="dropdown-menu dropdown-menu-end">
 									<!-- item-->
 									<button class="dropdown-item" data-toggle="modal" data-target="#inputModal"
-										data-id="${row.kd_kriteria}" onclick="showKriteria('${row.kd_kriteria}')"><i
+										data-id="${row.kd_bobot}" onclick="showBobot('${row.kd_bobot}')"><i
 											class="mdi mdi-pencil me-1"></i> Edit </button>
 									<!-- item-->
-									<button class="dropdown-item" data-id="${row.kd_kriteria}" id="delete-data-kriteria"><i
+									<button class="dropdown-item" data-id="${row.kd_bobot}" id="delete-data-bobot"><i
 											class="mdi mdi-delete me-1"></i> Hapus </button>
 								</div>
 							</div>

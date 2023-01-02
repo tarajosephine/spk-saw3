@@ -56,12 +56,6 @@ class Menu_model extends CI_Model
 		return $this->db->where('id', $id)->update('user', $data);
 	}
 
-	// Kriteria
-	public function kodeKriteria(){
-		$query = "SELECT max(kd_kriteria) as kodeTerbesar FROM kriteria";
-		return $this->db->query($query)->row_array();
-	}
-
 	public function getAutoSearch($keyword)
 	{
 		$query = "SELECT * FROM pelanggan WHERE cid LIKE '%" . $keyword . "%' ORDER BY cid LIMIT 10
@@ -80,11 +74,19 @@ class Menu_model extends CI_Model
 		return $this->db->delete('pelanggan', ['cid' => $id]);
 	}
 
-	public function KeluhanPelanggan(){
+	public function KeluhanPelanggan()
+	{
 		$this->db->select('*');
 		$this->db->from("keluhan k");
-		$this->db->join('pelanggan p','k.id_p=p.cid','left');
+		$this->db->join('pelanggan p', 'k.id_p=p.cid', 'left');
 		return $this->db->get();
+	}
+
+	// Kriteria
+	public function kodeKriteria()
+	{
+		$query = "SELECT max(kd_kriteria) as kodeTerbesar FROM kriteria";
+		return $this->db->query($query)->row_array();
 	}
 
 	public function editKriteriaById($id, $data)
@@ -95,5 +97,39 @@ class Menu_model extends CI_Model
 	public function deleteKriteriaById($id)
 	{
 		return $this->db->delete('kriteria', ['kd_kriteria' => $id]);
+	}
+
+	// Bobot
+	public function kodeBobot()
+	{
+		$query = "SELECT max(kd_bobot) as kodeTerbesar FROM bobot";
+		return $this->db->query($query)->row_array();
+	}
+
+	public function editBobotById($id, $data)
+	{
+		return $this->db->where('kd_bobot', $id)->update('bobot', $data);
+	}
+
+	public function deleteBobotById($id)
+	{
+		return $this->db->delete('bobot', ['kd_bobot' => $id]);
+	}
+
+	// Tes Minat
+	public function kodeTesMinat()
+	{
+		$query = "SELECT max(kd_tes) as kodeTerbesar FROM tes_minat";
+		return $this->db->query($query)->row_array();
+	}
+
+	public function editTesMinatById($id, $data)
+	{
+		return $this->db->where('kd_tes', $id)->update('tes_minat', $data);
+	}
+
+	public function deleteTesMinatById($id)
+	{
+		return $this->db->delete('tes_minat', ['kd_tes' => $id]);
 	}
 }
